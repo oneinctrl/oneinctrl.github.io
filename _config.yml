@@ -1,4 +1,6 @@
 title: System Is Error
+description: A collection of write-ups and research on real-world security issues.
+
 header_pages:
   - index.md
   - about.md
@@ -10,3 +12,11 @@ style: dark
 
 plugins:
   - jekyll-seo-tag
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts" # previously `post` in Jekyll 2.2.
+    values:
+      is_post: true
