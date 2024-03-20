@@ -4,6 +4,11 @@
     <div class="title">
       <span><a href="/"><b>{{site.title}}</b></a> by oneinctrl</span>
     </div>
+    {% if page.is_post %}
+      <div class="title">
+        <span><a href="{{page.permalink}}"><b>{{page.title}}</b></a></span>
+      </div>
+    {% endif %}
     <div class="menu">
       <ul>
         {%- for path in page_paths -%}

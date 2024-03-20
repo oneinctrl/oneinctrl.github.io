@@ -42,16 +42,17 @@ body {
   margin: 0 auto;
   padding: 0;
   font-family: "Source Code Pro", monospace;
-  font-size: 12.5px;
+  font-size: 16.5px;
   color: var(--text-color);
   text-align: left;
   line-height: 1.5 !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-size: 12.5px;
+  font-size: 16.5px;
   margin: 0px;
   margin-top: 22px;
+  margin-bottom: 5px;
   font-weight: bold;
   color: var(--text-color);
 }
@@ -76,12 +77,17 @@ a:hover {
     font-size: 12px !important;
   }
 }
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 /**
  * Layout
  */
 .container {
   width: 90%;
-  max-width: 600px;
+  max-width: 1400px;
   margin-right: auto;
   margin-left: auto;
 }
@@ -211,7 +217,7 @@ input[type=text], select, textarea {
   background-color: var(--background-color);
   color: var(--text-color);
   caret-color: var(--text-color);
-  font-size: 12.5px;
+  font-size: 16.5px;
   font-family: "Source Code Pro", monospace;
   line-height: 1.5;
 }
@@ -234,7 +240,7 @@ input, select, textarea, textarea::-webkit-input-placeholder {
 }
 
 input[type=submit] {
-  font-size: 12.5px;
+  font-size: 16.5px;
   font-family: "Source Code Pro", monospace;
   line-height: 1.5;
   cursor: pointer;
@@ -273,7 +279,7 @@ pre {
   padding: 0;
   margin: 0;
   overflow: auto;
-  font-size: 12.5px;
+  font-size: 16.5px;
   color: var(--text-color);
   line-height: 1.7 !important;
   font-family: "Source Code Pro", monospace !important;
