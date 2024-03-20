@@ -1,9 +1,16 @@
 ---
-title: about
-layout: home
+title: /about
+layout: default
 permalink: /about
 ---
 
-# Lorem ipsum
+# About {{site.title}}
+A collection of write-ups and research on real-world security issues. It does not feature general security topics or CTFs, but rather more peculiar cases, incidents, bug bounties and research, which hopefully will grow in time.\
+It is named after a ridiculous error message returned from a bug bounty target, in the spirit of <a href="https://en.wikipedia.org/wiki/All_your_base_are_belong_to_us">"all your base are belong to us"</a>:
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+<div align="center">
+<img src="content/images/system-is-error-response.png" alt="system is error response" width="50%" height="50%">
+</div>
+
+# About oneinctrl
+An Application Security & Software engineer, aspiring bug bounty researcher and ethical hacker.

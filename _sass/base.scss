@@ -47,7 +47,10 @@ footer { margin-bottom: 20px; }
 /**
  * Header/Navigation
  */
-.menu { border-top: var(--border);  border-bottom: var(--border);  margin-bottom: 25px; }
+.navigation { display:flex; justify-content: space-between; border-top: var(--border);  border-bottom: var(--border); margin-bottom: 25px;}
+.title { display:flex;}
+.title span { margin-top: 12px;  margin-bottom: 12px;  text-decoration: none;}
+.title span a { text-decoration: none;}
 .menu ul { margin-top: 12px;  margin-bottom: 12px;  padding-left: 0px;  list-style-type: none;  text-align: right; }
 .menu ul li { display: inline;  margin-left: 10px; }
 .menu ul li a { text-decoration: none;  color: var(--text-color); }
