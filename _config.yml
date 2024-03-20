@@ -1,11 +1,11 @@
 title: System Is Error
-description: A collection of write-ups and research on real-world security issues.
+description: A collection of write-ups and research on real-world cyber security.
 
 header_pages:
   - index.md
   - about.md
 
-#footer: 'follow us on <a href="https://twitter.com/">twitter</a>'
+footer: '&lt;EOF&gt;'
 
 style: dark
 #listen_for_clients_preferred_style: true # true or false (default)
