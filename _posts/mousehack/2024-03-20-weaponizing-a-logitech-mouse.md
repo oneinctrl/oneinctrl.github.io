@@ -139,7 +139,7 @@ As before, we save the macro, enable on-board memory and replace the default pro
 
 As you can see, with the delay optimization executing the macro is almost instant and the user can (maybe) only notice one or two flashing windows that close immediately. An unsuspecting user could think that the OS is still installing drivers for the mouse.
 
-Modifying the payload for Linux, replacing "Win + R" for "Alt + F2" and we see that on Ubuntu it's almost identical;
+Modifying the payload for Linux, replacing "Win + R" for "Alt + F2" and we see that on Ubuntu it's almost identical:
 
 <video src="/assets/mousehack/videos/curl_demo_ubuntu.mp4" type="video/mp4" width="100%" controls></video>
 
