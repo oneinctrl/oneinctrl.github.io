@@ -185,16 +185,16 @@ However, the mere fact that you will see some scrutiny/controls and warnings tha
 
 Now that we've seen macros in action and a glimpse of what could be achieved with them, here are a few "hypothetical" attack scenarios:
 
-1. Placing a "brand-new" mouse in/around an office - depending on the physical security of a corporation gaining access to a machine could be as easy as pretending to go to an interview, tailgate an employee, act as a delivery man, etc. All you would need is to leave a weaponized mouse with/without it's package and wait for an unsuspecting victim to decide to test it out. Hell, you may even "accidentally drop" it anywhere on/around the premises - in a waiting room, hallway, elevator.
-2. Send a branded "company" mouse to a target employee - all you would need is the destination address and to impersonate an HR/company representative. Where I leave, you can fill in the sender details however you like, as long as you pay the delivery - they don't care or ask for ID.
-3. Replacing a target/colleague's mouse with the same model - nowadays not only gaming mice have RGB, multiple buttons and memory, there are many "business class" models out there. With the increase in popularity of more complex mice, this attack could be as easy as buying the same model as your target and having brief access to swap them.
+- Placing a "brand-new" mouse in/around an office - depending on the physical security of a corporation gaining access to a machine could be as easy as pretending to go to an interview, tailgate an employee, act as a delivery man, etc. All you would need is to leave a weaponized mouse with/without it's package and wait for an unsuspecting victim to decide to test it out. Hell, you may even "accidentally drop" it anywhere on/around the premises - in a waiting room, hallway, elevator.
+- Send a branded "company" mouse to a target employee - all you would need is the destination address and to impersonate an HR/company representative. Where I leave, you can fill in the sender details however you like, as long as you pay the delivery - they don't care or ask for ID.
+- Replacing a target/colleague's mouse with the same model - nowadays not only gaming mice have RGB, multiple buttons and memory, there are many "business class" models out there. With the increase in popularity of more complex mice, this attack could be as easy as buying the same model as your target and having brief access to swap them.
 
 # Conclusion 
 Given how "trusted" mice are by both humans and technology, and the fact that they now come in sexier packages, we as security professionals should start paying more attention to how we provision each device for our homes and for our employees. We have numerous controls and expensive tools to protect us from RATs (remote access trojan), we have almost nothing against mice. *I will walk myself out.*
 
 # References:
 
-hxxps[://]www[.]theverge[.]com/2018/6/26/17506656/dota-2-ti8-disqualified-esports-mouse-macros-thunder-predator
-hxxps[://]technode[.]com/2019/11/07/chinas-online-gaming-cheats-turn-to-hardware-to-evade-detection/
-hxxps[://]www[.]qubes-os[.]org/intro/
-hxxps[://]www[.]emergenresearch[.]com/industry-report/gaming-mouse-market
+- hxxps[://]www[.]theverge[.]com/2018/6/26/17506656/dota-2-ti8-disqualified-esports-mouse-macros-thunder-predator
+- hxxps[://]technode[.]com/2019/11/07/chinas-online-gaming-cheats-turn-to-hardware-to-evade-detection/
+- hxxps[://]www[.]qubes-os[.]org/intro/
+- hxxps[://]www[.]emergenresearch[.]com/industry-report/gaming-mouse-market

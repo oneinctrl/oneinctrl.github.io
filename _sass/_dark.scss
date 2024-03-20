@@ -4,13 +4,15 @@
 
 :root {
   --base-color: #DBDBDB;
-  --border: dashed 1px rgba(219, 219, 219, 0.9);
+  --border: dashed 2px rgba(219, 219, 219, 0.9);
   --selection-background: rgba(219, 219, 219, 0.99);
   --selection-text: #000;
-  --background-color: #000;
+  // --background-color: #000;
+  --background-color: #16191f;
   --text-color: var(--base-color);
   --placeholder-color: var(--base-color);
   --link-color: var(--base-color);
+  --code-background-color: #30353c;
   --code-color-1: #aaaaaa;
   --code-color-2: #ffffcc;
   --code-color-3: #F00000;

@@ -4,13 +4,14 @@
 @import url("https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700");
 :root {
   --base-color: #DBDBDB;
-  --border: dashed 1px rgba(219, 219, 219, 0.9);
+  --border: dashed 2px rgba(219, 219, 219, 0.9);
   --selection-background: rgba(219, 219, 219, 0.99);
   --selection-text: #000;
-  --background-color: #000;
+  --background-color: #16191f;
   --text-color: var(--base-color);
   --placeholder-color: var(--base-color);
   --link-color: var(--base-color);
+  --code-background-color: #30353c;
   --code-color-1: #aaaaaa;
   --code-color-2: #ffffcc;
   --code-color-3: #F00000;
@@ -57,8 +58,13 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-color);
 }
 
-p, ul, ol {
+ul, ol {
   margin: 0px;
+  color: var(--text-color);
+}
+
+p {
+  margin-top: 10px;
   color: var(--text-color);
 }
 
@@ -139,16 +145,11 @@ footer {
  */
 :not(.menu) > ul {
   list-style: none;
-  padding-left: 0;
+  padding-left: 20px;
 }
 
 :not(.menu) > ul {
-  list-style-type: none;
-}
-
-:not(.menu) > ul > li:before {
-  content: "-";
-  margin-right: 9px;
+  list-style-type: disc;
 }
 
 /**
@@ -270,13 +271,14 @@ textarea {
 }
 
 figure.highlight {
-  margin: 5px 0;
+  margin: 20px 0;
 }
 
 pre {
-  background-color: var(--background-color);
+  background-color: var(--code-background-color);
+  border-radius: 10px;
   border: none;
-  padding: 0;
+  padding: 10px 20px;
   margin: 0;
   overflow: auto;
   font-size: 16.5px;
