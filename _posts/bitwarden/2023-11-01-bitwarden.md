@@ -12,7 +12,7 @@ Also, it is an example of how managing internal threat is crucial, since you can
 
 Last but not least, it proves that the security principles exist for reasons other than just theories and paranoia and once our "theoretical" threats materialize, they could be fatal and resolving them is often a really hard job.
 
-**Disclaimer:** *Since full disclosure can harm the company's reputation even after the incident is resolved, all data related to the company and its employees is obfuscated.*
+**Disclaimer:** *Since full disclosure can harm the company's reputation even after the incident is resolved, all data related to the company and its employees is heavily obfuscated.*
 
 Earlier this year I joined a start-up company to lead the Application Security team, which for the timeline of this story continued to be comprised of, well, only me.
 
@@ -35,7 +35,7 @@ The first step was using GitHub's search functionality and basic keywords which 
 git rev-list --all | xargs git grep 'keyword'
 {% endhighlight %}
 
-The output was many concerning results which was another indication this process will take a while. I decided to drop the bash scripting and go for an official tool for this purpose - Gitleaks. I picked it up because at the time it was the most recent and actively developed tool for secret detection and after months of experience with it I cannot recommend it enough.
+There were many concerning results which was another indication this process will take a while. I decided to drop the bash scripting and go for an official tool for this purpose - Gitleaks. I picked it up because at the time it was the most recent and actively developed tool for secret detection and after months of experience with it I cannot recommend it enough.
 
 The Gitleaks findings were devastating - the secrets were not only all over the place, there was a variety of different types and worst of all - many, many, still active ones. Private keys, certificates, version control system tokens, passwords and connection strings were everywhere. Most of them were obfuscated, deleted or encrypted but only in the latest version of the code, without revoking the actual value that was "once" exposed in previous commits, as you can see from the following example:
 
@@ -62,17 +62,17 @@ At the time the company was using this "Bitwarden" instance as the company wide 
 
 As it turned out, the company is actually using "Vaultwarden" which is, as per its official documentation - "a self-hosted, unofficial Bitwarden compatible server written in Rust" and is not owned by the company behind Bitwarden (regardless of the app mentioning Bitwarden Inc.).
 
-**Disclaimer:** The compromise described in the following sections is not related/caused by a vulnerability in either Bitwarden or the Vaultwarden alternative. It is a chain of misconfigurations and missing security controls. The collections functionality described below is working as intended and as documented, the official Bitwarden documentation clearly states that collections are shared within all users in a given organization. The intent of this article is not to discourage anyone from using both password managers or to diminish their reputation and level of security. On the contrary, the purpose is to show that good encryption and a good password manager are only as good as how you configure and manage them.
+**Disclaimer:** _The compromise described in the following sections is not related/caused by a vulnerability in either Bitwarden or the Vaultwarden alternative. It is a chain of misconfigurations and missing security controls. The collections functionality described below is working as intended and as documented, the official Bitwarden documentation clearly states that collections are shared within all users in a given organization. The intent of this article is not to discourage anyone from using both password managers or to diminish their reputation and level of security. On the contrary, the purpose is to show that good encryption and a good password manager are only as good as how you configure and manage them._
 
 # DB Access
 
-I installed a psql client and tested the connection string and it worked, the only existing protection was the company VPN, which all staff was connecting to. 
+I installed a psql client and tested the connection string and it worked, the only existing protection was the company VPN, which all employees were connecting to. 
 
 |![](/assets/bitwarden/images/image_4_bitwarden_tables.png)|
 |:--:| 
 |*Image 4: Bitwarden/Vaultwarden database tables*|
 
-The first thing to check was the users table which presented the users' password hashes and password hints!
+The first thing to check was the users table which presented the users' password hashes and password hints:
 
 |![](/assets/bitwarden/images/image_5_bitwarden_users_table.png)|
 |:--:| 
@@ -80,15 +80,16 @@ The first thing to check was the users table which presented the users' password
 
 I immediately contacted the team managing the instance - DevOps, to alert of the secret and the access to the database. The response was along the lines of "so what if you have access to the hashes", "only a limited number of employees have access to the repository" and overall that this is not a problem.
 
-After some back and forth of me trying to explain the risk and the potential impact of the current situation, we finally agreed that the password would be revoked and network rules would be implemented to limit the access to the database only to admins, not everyone on the VPN. I had to accept that my finding is not so critical for the time being. 
+After some back and forth of me trying to explain the potential risk and impact of the current situation, we finally agreed that the password would be revoked and network rules would be implemented to limit the access to the database only to admins, not everyone on the VPN. I had to accept that my finding is not so critical for the time being. 
 
-A month later, the internal ticket for changing the database password was still untouched. In a second attempt to fix this, I logged into the database with the good old connection string. After looking around at the different tables, columns and relations between them I decided to dump the database and to analyse it locally.
+A month later, the internal ticket for changing the database password was still untouched. In a second attempt to escalate this, I logged into the database with the good old connection string. After looking around at the different tables, columns and relations between them I decided to dump the database and to analyse it locally.
 
 {% highlight bash %}
 pg_dumpall -h <ip> -p 5433 -U bitwardenuser -W -f backup.sql
 {% endhighlight %}
 
-This command created a dump of the whole database and stored it in a simple SQL file with all the create table and insert statements. To restore the database into a local instance and run Vaultwarden:
+This command created a dump of the whole database and stored it in a simple SQL file with all the create table and insert statements.
+The following commands restore the database into a local instance and run Vaultwarden:
 
 {% highlight bash %}
 # Pull PostgreSQL docker image
@@ -142,9 +143,9 @@ The Vaultwarden/Bitwarden algorithm implements a Password Based Key Derivation F
 2. The resulting hash is salted with the master password and hashed once
 3. The result of step 2 is then passed to the Bitwarden server where it is salted with a random salt (stored in the db) and hashed another 100 000 times
 
-*Note: The iteration count is configurable both on an instance and user level, by default it's 100 000. None of the target users had different iteration count set up.*
+**Note:** *The iteration count is configurable both on an instance and user level, by default it's 100 000. None of the target users had a different iteration count set up.*
 
-Both of the projects are open-source which made the task a little easier, however, I had no experience with Rust (Vaultwarden) and have not touched C# (Bitwarden) in a very long time, so I went with the above diagram and replicated it in GO:
+Both of the projects are open-source which made the task a little easier, however, I had no experience with Rust (Vaultwarden) and had not touched C# (Bitwarden) in a very long time, so I went with the above diagram and replicated it in GO:
 
 {% highlight go %}
 package main
@@ -261,6 +262,7 @@ func parseHex(raw string) string {
 	return raw
 }
 {% endhighlight %}
+***Note:*** *The actual cracking was done with each email and word list processed in parallel.*
 
 I extracted the necessary fields from the users table into a csv file:
 
@@ -269,9 +271,7 @@ I extracted the necessary fields from the users table into a csv file:
 psql -U postgres -h 172.17.0.2 bitwarden --csv -t -c "select email, salt, password_hash, client_kdf_iter, password_iterations from users;" -o targets.csv
 ```
 {% endhighlight %}
-<p></p>And then ran it against different word lists. Note: the actual cracking was done with each email and word list processed in parallel.
-
-Example:
+And then ran it against different word lists:
 {% highlight bash %}
 ```
 go build bitwarden.go
@@ -295,17 +295,17 @@ One of these accounts was actually empty, the other revealed some passwords, but
 
 # Privilege escalation
 
-The hash cracking exercise described above took a few days and while it was running, I started exploring other ways to gain access to passwords by messing up with both the actual application and the database:
+The hash cracking exercise described above took a few days and while it was running, I explored several other ways to gain access to passwords by messing up with both the actual application and the database:
 
 - Updating the hash of another user with a hash I know the password for - resulted in successful login as the other user, but all vault items were shown with an decryption error (after removing some db unique key constraints)
-- Taking over an account as in the previous point and inviting myself in the organizations of the victim account. The invite needs to be confirmed and it gets signed with the actual master password of the account that initiates the invite - so a wrong password in this case (the one from the hash I inserted)
+- Taking over an account as in the previous step and inviting myself in the organizations of the victim account. The invite needs to be confirmed and it gets signed with the actual master password of the account that initiates the invite - so a wrong password in this case (the one from the hash I inserted)
 - Moving items from an inaccessible collection to a one I am part of
 - Creating a new organization and copying passwords to it
 
 
-All of the above failed, due to fact that all of these operations involve encrypting/signing keys with the actual master password of the user that is performing the operation.
+All of the above attempts failed, due to fact that all of these operations involve encrypting/signing keys with the actual master password of the user that is performing the operation.
 They resulted in partial access to screens in the front-end and performing some actions on behalf of other users, but all password/item related screens just showed a decryption error.
-I could see how many are in a given folder/collection but only that, none of the names of the entries or the actual values.
+I could see how many items are in a given collection but only that, none of the names of the entries or the actual values.
 
 |![](/assets/bitwarden/images/image_9_decryption_error.png)|
 |:--:| 
@@ -332,34 +332,33 @@ After iterating all collections, my vault homepage went from this:
 |:--:| 
 |*Image 10: Initial collections*|
 
-to multiple collections:
+To multiple collections:
 
 |![](/assets/bitwarden/images/image_11_additional_collections.png)
 |:--:| 
 |*Image 11: Getting access to additional collections*|
 
-Respectively each collection had entries that were previously inaccessible. This definitely showed that collections are a way to get access to things I should not have.
+Each of the new collections had entries that were previously inaccessible. This definitely showed that collections are a way to get access to items I should not have.
 
-However before exploring the entries in the collections in detail I looked at the database to see why I could not not join organizations but I could join collections.
-While looking at this I came across what turned out to be the big "Open Sesame" thing:
+However, before exploring the entries in more detail I looked at the database once more to see why I could not join organizations, but I could insert my account into collections. This is when I came across what turned out to be the big "Open Sesame" moment:
 
 |![](/assets/bitwarden/images/image_12_access_all_flag.png)|
 |:--:| 
 |*Image 12: Access all flag in users_organizations table*|
 
-Within the organization I was part of I had the "Access All" flag set to False. I quickly updated it to True:
+Within the company organization I had the "Access All" flag set to False. I quickly updated it to True:
 
 ```sql
 bitwarden=> update users_organizations set access_all = 't' where user_uuid = '2c81650a-e7f3-159d-b2e8-9a1245d3a007';
 ```
 
-I went back to the Bitwarden/Vaultwarden front-end in the browser and I was prompted to unlock my account:
+I went back to the Bitwarden/Vaultwarden front-end in the browser and was prompted to unlock my account:
 
 |![](/assets/bitwarden/images/image_13_password_prompt.png)|
 |:--:| 
 |*Image 13: Bitwarden/Vaultwarden prompt for master password*|
 
-After which I noticed my Vault homepage going from this: 
+After than my Vault homepage went from this: 
 
 |![](/assets/bitwarden/images/image_14_vault_items_before_compromise.png)|
 |:--:| 
@@ -409,11 +408,11 @@ To:
 
 ## Assessing the loot
 
-All the passwords from all the collections that were part of the company's organization were revealed to me.
-As seen in the screenshots, the list ranges from:
+All the vault items from all the collections that were part of the company's organization were revealed to me.
+As seen in the screenshots, the list ranged from:
 
 - Individual accounts to some of the systems the company is using
-- Access credentials to a datacenter customer portal
+- Access credentials to a data center customer portal
 - Production cloud accounts
 - Finance and accounting platforms
 - HR and recruitment platforms
@@ -458,28 +457,30 @@ There were additional individual users' passwords which were not shared in a col
 
 # Datadog
 
-Although successful in my compromise, to this point I could still recall the previous arguments "but only a few people have access to this repository", "it's not that big of a risk" and others.
-During the initial stages of my research I checked whether I can use the Bitwarden/Vaultwarden machine for pivoting to other hosts on the network.
+Although successful in my compromise, to this point I could still recall the previous arguments "but only a few people have access to this repository", "it's not that big of a deal" and others.
+During the initial stages of my testing I checked whether I can use the Bitwarden/Vaultwarden machine for pivoting to other hosts on the network.
 
-One of the systems I used for additional information was Datadog (a monitoring platform). I went back to Datadog, searched for the bitwarden/vaultwarden instance and started looking at the different screens related to it. One of them (fairly recent) was about monitoring Kubernetes clusters and pods (as you can see from bitwarden.yaml from *Image 2* Kubernetes was used to deploy it). After a while I stumbled upon a tab labeled "YAML" only to see the exact same bitwarden.yaml without any of the passwords obfuscated! I swiftly checked out my profile to see whether I have admin rights to be able to see so much information only to realize that I (once again) had read-only access.
+One of the systems I used for additional information was Datadog (a monitoring platform). I went back to Datadog, searched for the bitwarden/vaultwarden instance and started looking at the different screens related to it. One of them (fairly new at the time) was about monitoring Kubernetes clusters and pods (as you can see from bitwarden.yaml from *Image 2* Kubernetes was used for deployment).
+After a while I stumbled upon a tab labeled "YAML" only to see the exact same bitwarden.yaml without any of the passwords obfuscated!
+I swiftly checked out my profile to see whether I have admin rights to be able to see so much information only to realize that (once again) I had read-only access.
 
-This was the cherry on the cake, since all technical staff had access to Datadog and they had either the same or even higher permissions, which meant ALL of them could go to this tab, see the database password and achieve the same compromise of the password manager of the company. This allowed me to trigger the incident response procedure and any excuse/push back was no longer valid.
+This was the cherry on the cake, since all technical staff had access to Datadog and they either had the same or even higher permissions, which meant ALL of them could go to this tab, see the database password and achieve the same compromise of the password manager of the company. This allowed me to trigger the incident response procedure and any excuse/pushback was no longer valid.
 
 # Resolution & Lessons learned
 
-The immediate actions taken to resolve the situation were as follows.
+The immediate actions taken to resolve the incident were as follows.
 
 Technical:
-- Migrate the PostgreSQL database to a separate machine (it was initially the same where the front-end app is deployed).
-- Modify network rules so that only a specific VPN group has access to the database machine for maintenance purposes.
-- Cut off external internet access of the Vaultwarden machine, to avoid supply chain attack in case the project gets compromised and start's sending plain-text passwords home.
+- Migrate the PostgreSQL database to a separate machine (it was initially the same one where the front-end app was deployed).
+- Modify the network rules so that only a specific VPN group has access to the database machine for maintenance purposes.
+- Cut off external internet access of the Vaultwarden machine, to avoid a supply chain attack in case the project gets compromised and starts sending plain-text passwords home.
 - Disable the Kubernetes monitoring in Datadog (the monitoring was already setup in another platform). Additionally, obfuscation of such sensitive information could be controlled via regular expressions.
 
 Organizational:
 - Split the current organization within Vaultwarden into multiple ones (one for each previous collection, a.k.a department).
 - Migrate the passwords from the current collections to the newly created organizations.
-- Migrate the users of the previous big organization to the newly department based organizations. This involved sending email invites and confirmations.
-- Training sessions with each department to instruct them to change each password in the respective systems.
+- Migrate the users of the previous big organization to the newly department-based organizations. This involved sending email invites to all employees.
+- Training sessions with each department on the new setup and to instruct them to change each password in the respective systems.
 - Deleting the old organization and collections.
 
 This new setup ensured that if any user somehow gets access to the database or finds a privilege escalation point within the app, they could only get access to the vault items that are already shared with them. Access to any other organization or its items meant they need to be officially invited, otherwise items cannot be successfully decrypted.
@@ -487,12 +488,12 @@ This new setup ensured that if any user somehow gets access to the database or f
 Lessons learned:
 - Setting up company applications, especially of such importance as a password manager should be done with great caution and security in mind
 - Internal threat is not only theoretical and in the books
-- GIT never forgets! There are ways to make it forget, but re-writing history is against the whole concept of it. It's best to keep good hygiene and avoid hard-coding sensitive data in the first place.
+- GIT never forgets! There are ways to make it forget, but re-writing history is against the whole concept of it. It is best to keep good hygiene and avoid hard-coding sensitive data in the first place.
 - The layered security models should not be neglected, small issues can pile up and lead to really big ones. Proper access management and controls on both application and network level could have prevented this compromise, even with the other misconfigurations and logical weaknesses.
-- Given enough time brute-forcing/hash-cracking is possible, although much more complicated and painful (for an attacker) and not like in the movies
-- Read-only access should not be automatically discarded as not a risk
+- Given enough time brute-forcing/hash-cracking is possible, although much more complicated and tedious (for an attacker) and not like in the movies
+- Read-only access should not be automatically discarded as not a risk.
 
-# References
+# References:
 
 - Sparc Flow's website: `hxxps[://]www[.]sparcflow[.]com/about/`
 - "How to hack like a ghost" book: `hxxps[://]nostarch[.]com/how-hack-ghost`

